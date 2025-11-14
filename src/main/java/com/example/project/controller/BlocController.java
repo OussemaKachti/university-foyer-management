@@ -20,7 +20,8 @@ public class BlocController {
 
      @PutMapping("/update/{id}")
      public Bloc update(@PathVariable Long id, @RequestBody Bloc bloc) {
-         return ibloc.update(id, bloc);
+
+        return ibloc.update(id, bloc);
      }
     
      @DeleteMapping("/delete/{id}")
