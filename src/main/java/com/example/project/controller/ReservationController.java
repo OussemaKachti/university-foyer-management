@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
+import com.example.project.DTO.ReservationDTO;
 import com.example.project.Entities.Reservation;
+import com.example.project.mapper.ReservationMapper;
 import com.example.project.services.IReservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,13 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
     private final IReservation ireservation;
+    private final ReservationMapper reservationMapper;
 
     @PostMapping("/create")
-    public Reservation create(@RequestBody Reservation reservation) {
-        return ireservation.create(reservation);
+    public ReservationDTO create(@RequestBody ReservationDTO reservationDTO) {
+        Reservation reservation = reservationMapper.toEntity(reservationDTO);
+        Reservation createdReservation = ireservation.create(reservation);
+        return reservationMapper.toDto(createdReservation);
     }
 
      @PutMapping("/update/{id}")

@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
+import com.example.project.DTO.ChambreDTO;
 import com.example.project.Entities.Chambre;
+import com.example.project.mapper.ChambreMapper;
 import com.example.project.services.IChambre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,20 @@ import java.util.List;
 @RequestMapping("/chambre")
 public class ChambreController {
     private final IChambre ichambre;
+    private final ChambreMapper chambreMapper;
 
     @PostMapping("/create")
-    public Chambre create(@RequestBody Chambre chambre) {
-        return ichambre.create(chambre);
+    public ChambreDTO create(@RequestBody ChambreDTO chambreDTO) {
+        Chambre chambre = chambreMapper.toEntity(chambreDTO);
+        Chambre createdChambre = ichambre.create(chambre);
+        return chambreMapper.toDto(createdChambre);
+    }
+
+    @PostMapping("/{idChambre}/affecterBloc/{idBloc}")
+    public Chambre affecterChambreABloc(
+            @PathVariable Long idChambre,
+            @PathVariable Long idBloc) {
+        return ichambre.affecterChambreABloc(idChambre, idBloc);
     }
 
      @PutMapping("/update/{id}")

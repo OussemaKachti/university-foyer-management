@@ -9,4 +9,5 @@ public interface IUniversite {
     void delete(Long id);
     List<Universite> getAll();
     Universite getById(Long id);
+    Universite affecterFoyerAUniversite(Long idUniversite, Long idFoyer);
 }

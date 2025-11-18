@@ -9,4 +9,5 @@ public interface IBloc {
     void delete(Long id);
     List<Bloc> getAll();
     Bloc getById(Long id);
+    Bloc affecterBlocAFoyer(Long idBloc, Long idFoyer);
 }

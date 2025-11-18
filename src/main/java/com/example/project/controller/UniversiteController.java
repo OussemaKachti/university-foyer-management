@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
+import com.example.project.DTO.UniversiteDTO;
 import com.example.project.Entities.Universite;
+import com.example.project.mapper.UniversiteMapper;
 import com.example.project.services.IUniversite;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,20 @@ import java.util.List;
 @RequestMapping("/universite")
 public class UniversiteController {
     private final IUniversite iuniversite;
+    private final UniversiteMapper universiteMapper;
 
     @PostMapping("/create")
-    public Universite create(@RequestBody Universite universite) {
-        return iuniversite.create(universite);
+    public UniversiteDTO create(@RequestBody UniversiteDTO universiteDTO) {
+        Universite universite = universiteMapper.toEntity(universiteDTO);
+        Universite createdUniversite = iuniversite.create(universite);
+        return universiteMapper.toDto(createdUniversite);
+    }
+
+    @PostMapping("/{idUniversite}/affecterFoyer/{idFoyer}")
+    public Universite affecterFoyerAUniversite(
+            @PathVariable Long idUniversite,
+            @PathVariable Long idFoyer) {
+        return iuniversite.affecterFoyerAUniversite(idUniversite, idFoyer);
     }
 
      @PutMapping("/update/{id}")

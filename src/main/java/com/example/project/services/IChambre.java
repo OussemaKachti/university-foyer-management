@@ -9,4 +9,5 @@ public interface IChambre {
     void delete(Long id);
     List<Chambre> getAll();
     Chambre getById(Long id);
+    Chambre affecterChambreABloc(Long idChambre, Long idBloc);
 }

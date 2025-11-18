@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
+import com.example.project.DTO.FoyerDTO;
 import com.example.project.Entities.Foyer;
+import com.example.project.mapper.FoyerMapper;
 import com.example.project.services.IFoyer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,13 @@ import java.util.List;
 @RequestMapping("/foyer")
 public class FoyerController {
     private final IFoyer ifoyer;
+    private final FoyerMapper foyerMapper;
 
     @PostMapping("/create")
-    public Foyer create(@RequestBody Foyer foyer) {
-        return ifoyer.create(foyer);
+    public FoyerDTO create(@RequestBody FoyerDTO foyerDTO) {
+        Foyer foyer = foyerMapper.toEntity(foyerDTO);
+        Foyer createdFoyer = ifoyer.create(foyer);
+        return foyerMapper.toDto(createdFoyer);
     }
 
      @PutMapping("/update/{id}")

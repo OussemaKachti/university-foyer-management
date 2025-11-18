@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
+import com.example.project.DTO.EtudiantDTO;
 import com.example.project.Entities.Etudiant;
+import com.example.project.mapper.EtudiantMapper;
 import com.example.project.services.IEtudiant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,13 @@ import java.util.List;
 @RequestMapping("/etudiant")
 public class EtudiantController {
     private final IEtudiant ietudiant;
+    private final EtudiantMapper etudiantMapper;
 
     @PostMapping("/create")
-    public Etudiant create(@RequestBody Etudiant etudiant) {
-        return ietudiant.create(etudiant);
+    public EtudiantDTO create(@RequestBody EtudiantDTO etudiantDTO) {
+        Etudiant etudiant = etudiantMapper.toEntity(etudiantDTO);
+        Etudiant createdEtudiant = ietudiant.create(etudiant);
+        return etudiantMapper.toDto(createdEtudiant);
     }
 
      @PutMapping("/update/{id}")
