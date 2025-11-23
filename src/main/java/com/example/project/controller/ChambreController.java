@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.DTO.ChambreDTO;
 import com.example.project.Entities.Chambre;
+import com.example.project.Entities.TypeChambre;
 import com.example.project.mapper.ChambreMapper;
 import com.example.project.services.IChambre;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +46,27 @@ public class ChambreController {
          return ichambre.getById(id);
      }
 
-     @GetMapping("/getAll")
-     public List<Chambre> getAll() {
-         return ichambre.getAll();
-     }
+    @GetMapping("/getAll")
+    public List<Chambre> getAll() {
+        return ichambre.getAll();
+    }
+
+    @GetMapping("/parUniversite")
+    public List<Chambre> getChambresParNomUniversite(@RequestParam String nomUniversite) {
+        return ichambre.getChambresParNomUniversite(nomUniversite);
+    }
+
+    @GetMapping("/parBlocEtType")
+    public List<Chambre> getChambresParBlocEtType(
+            @RequestParam long idBloc,
+            @RequestParam TypeChambre typeC) {
+        return ichambre.getChambresParBlocEtType(idBloc, typeC);
+    }
+
+    @GetMapping("/nonReservees")
+    public List<Chambre> getChambresNonReserveParNomUniversiteEtTypeChambre(
+            @RequestParam String nomUniversite,
+            @RequestParam TypeChambre type) {
+        return ichambre.getChambresNonReserveParNomUniversiteEtTypeChambre(nomUniversite, type);
+    }
 }

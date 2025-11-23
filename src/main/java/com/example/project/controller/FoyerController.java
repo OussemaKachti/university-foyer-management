@@ -23,6 +23,13 @@ public class FoyerController {
         return foyerMapper.toDto(createdFoyer);
     }
 
+    @PostMapping("/ajouterEtAffecterAUniversite/{idUniversite}")
+    public Foyer ajouterFoyerEtAffecterAUniversite(
+            @RequestBody Foyer foyer,
+            @PathVariable long idUniversite) {
+        return ifoyer.ajouterFoyerEtAffecterAUniversite(foyer, idUniversite);
+    }
+
      @PutMapping("/update/{id}")
      public Foyer update(@PathVariable Long id, @RequestBody Foyer foyer) {
          return ifoyer.update(id, foyer);

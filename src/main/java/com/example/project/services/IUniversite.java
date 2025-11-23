@@ -9,5 +9,6 @@ public interface IUniversite {
     void delete(Long id);
     List<Universite> getAll();
     Universite getById(Long id);
-    Universite affecterFoyerAUniversite(Long idUniversite, Long idFoyer);
+    Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite);
+    Universite desaffecterFoyerAUniversite(long idUniversite);
 }

@@ -23,6 +23,18 @@ public class ReservationController {
         return reservationMapper.toDto(createdReservation);
     }
 
+    @PostMapping("/ajouter/{idBloc}")
+    public Reservation ajouterReservation(
+            @PathVariable long idBloc,
+            @RequestParam long cinEtudiant) {
+        return ireservation.ajouterReservation(idBloc, cinEtudiant);
+    }
+
+    @PostMapping("/annuler")
+    public Reservation annulerReservation(@RequestParam long cinEtudiant) {
+        return ireservation.annulerReservation(cinEtudiant);
+    }
+
      @PutMapping("/update/{id}")
      public Reservation update(@PathVariable String id, @RequestBody Reservation reservation) {
          return ireservation.update(id, reservation);
@@ -38,8 +50,15 @@ public class ReservationController {
          return ireservation.getById(id);
      }
 
-     @GetMapping("/getAll")
-     public List<Reservation> getAll() {
-         return ireservation.getAll();
-     }
+    @GetMapping("/getAll")
+    public List<Reservation> getAll() {
+        return ireservation.getAll();
+    }
+
+    @GetMapping("/parAnneeEtUniversite")
+    public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(
+            @RequestParam java.util.Date anneeUniversite,
+            @RequestParam String nomUniversite) {
+        return ireservation.getReservationParAnneeUniversitaireEtNomUniversite(anneeUniversite, nomUniversite);
+    }
 }

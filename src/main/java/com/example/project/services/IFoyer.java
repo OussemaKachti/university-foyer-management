@@ -9,4 +9,5 @@ public interface IFoyer {
     void delete(Long id);
     List<Foyer> getAll();
     Foyer getById(Long id);
+    Foyer ajouterFoyerEtAffecterAUniversite(Foyer foyer, long idUniversite);
 }

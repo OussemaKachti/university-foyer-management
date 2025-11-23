@@ -2,8 +2,9 @@ package com.example.project.services;
 
 import com.example.project.Entities.Bloc;
 import com.example.project.Entities.Chambre;
-import com.example.project.repository.BlocRepository;
+import com.example.project.Entities.TypeChambre;
 import com.example.project.repository.ChambreRepository;
+import com.example.project.repository.BlocRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +53,25 @@ public class ChambreServiceImpl implements IChambre {
         
         chambre.setBloc(bloc);
         return chambreRepository.save(chambre);
+    }
+
+    @Override
+    public List<Chambre> getChambresParNomUniversite(String nomUniversite) {
+        return chambreRepository.findByBlocFoyerUniversiteNomUniversite(nomUniversite);
+    }
+
+    @Override
+    public List<Chambre> getChambresParBlocEtType(long idBloc, TypeChambre typeC) {
+        return chambreRepository.findByBlocIdBlocAndTypeC(idBloc, typeC);
+    }
+
+    @Override
+    public List<Chambre> getChambresNonReserveParNomUniversiteEtTypeChambre(String nomUniversite, TypeChambre type) {
+        List<Chambre> chambres = chambreRepository.findByBlocFoyerUniversiteNomUniversiteAndTypeC(nomUniversite, type);
+        return chambres.stream()
+            .filter(c -> c.getReservations() == null || 
+                         c.getReservations().isEmpty() ||
+                         c.getReservations().stream().noneMatch(r -> r.getEstValide() != null && r.getEstValide()))
+            .collect(java.util.stream.Collectors.toList());
     }
 }

@@ -10,4 +10,5 @@ public interface IBloc {
     List<Bloc> getAll();
     Bloc getById(Long id);
     Bloc affecterBlocAFoyer(Long idBloc, Long idFoyer);
+    Bloc affecterChambresABloc(List<Long> numChambre, long idBloc);
 }

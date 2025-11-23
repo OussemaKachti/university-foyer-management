@@ -43,15 +43,29 @@ public class UniversiteServiceImpl implements IUniversite {
     }
 
     @Override
-    public Universite affecterFoyerAUniversite(Long idUniversite, Long idFoyer) {
-        Universite universite = universiteRepository.findById(idUniversite)
-                .orElseThrow(() -> new RuntimeException("Universite not found"));
+    public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
+        Universite universite = universiteRepository.findByNomUniversite(nomUniversite)
+                .orElseThrow(() -> new RuntimeException("Universite not found with name: " + nomUniversite));
         
         Foyer foyer = foyerRepository.findById(idFoyer)
-                .orElseThrow(() -> new RuntimeException("Foyer not found"));
+                .orElseThrow(() -> new RuntimeException("Foyer not found with id: " + idFoyer));
         
         universite.setFoyer(foyer);
         foyer.setUniversite(universite);
+        
+        return universiteRepository.save(universite);
+    }
+
+    @Override
+    public Universite desaffecterFoyerAUniversite(long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite)
+                .orElseThrow(() -> new RuntimeException("Universite not found with id: " + idUniversite));
+        
+        if (universite.getFoyer() != null) {
+            Foyer foyer = universite.getFoyer();
+            universite.setFoyer(null);
+            foyer.setUniversite(null);
+        }
         
         return universiteRepository.save(universite);
     }

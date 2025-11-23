@@ -23,11 +23,16 @@ public class UniversiteController {
         return universiteMapper.toDto(createdUniversite);
     }
 
-    @PostMapping("/{idUniversite}/affecterFoyer/{idFoyer}")
+    @PostMapping("/affecterFoyer/{idFoyer}")
     public Universite affecterFoyerAUniversite(
-            @PathVariable Long idUniversite,
-            @PathVariable Long idFoyer) {
-        return iuniversite.affecterFoyerAUniversite(idUniversite, idFoyer);
+            @PathVariable long idFoyer,
+            @RequestParam String nomUniversite) {
+        return iuniversite.affecterFoyerAUniversite(idFoyer, nomUniversite);
+    }
+
+    @PostMapping("/desaffecterFoyer/{idUniversite}")
+    public Universite desaffecterFoyerAUniversite(@PathVariable long idUniversite) {
+        return iuniversite.desaffecterFoyerAUniversite(idUniversite);
     }
 
      @PutMapping("/update/{id}")

@@ -30,6 +30,13 @@ public class BlocController {
         return ibloc.affecterBlocAFoyer(idBloc, idFoyer);
     }
 
+    @PostMapping("/{idBloc}/affecterChambres")
+    public Bloc affecterChambresABloc(
+            @PathVariable long idBloc,
+            @RequestBody List<Long> numChambre) {
+        return ibloc.affecterChambresABloc(numChambre, idBloc);
+    }
+
      @PutMapping("/update/{id}")
      public Bloc update(@PathVariable Long id, @RequestBody Bloc bloc) {
 
